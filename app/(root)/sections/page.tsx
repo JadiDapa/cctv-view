@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCcw, Search } from "lucide-react";
-import PageHeader from "@/components/dashboard/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,6 +10,7 @@ import { getAllSections } from "@/lib/networks/section";
 import CreateSectionDialog from "@/components/root/section/CreateSectionDialog";
 import { SectionType } from "@/lib/types/section";
 import SectionCard from "@/components/root/section/SectionCard";
+import PageHeader from "@/components/root/PageHeader";
 
 export default function SectionsPage() {
   const {
@@ -30,13 +30,12 @@ export default function SectionsPage() {
   );
 
   return (
-    <main className="min-h-screen w-full space-y-8 border bg-white p-4 md:rounded-2xl lg:p-6">
+    <main className="min-h-screen w-full space-y-8 border p-4 md:rounded-2xl lg:p-6">
       {/* PAGE HEADER */}
       <div className="flex flex-col items-center justify-between lg:flex-row">
         <PageHeader
           title="Section List"
           subtitle="These are all the sections that you have created!"
-          hidden
         />
 
         <div className="flex gap-3">

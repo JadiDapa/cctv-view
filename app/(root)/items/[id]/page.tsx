@@ -31,9 +31,9 @@ export default function ItemsDocuments() {
     return <Skeleton className="h-32 w-full rounded-2xl" />;
 
   return (
-    <main className="bg-white w-full md:rounded-2xl lg:p-6 p-4 min-h-screen border space-y-8">
+    <main className="min-h-screen w-full space-y-8 border p-4 md:rounded-2xl lg:p-6">
       {/* PAGE HEADER */}
-      <div className="flex lg:flex-row flex-col gap-6  justify-between items-center">
+      <div className="flex flex-col items-center justify-between gap-6 lg:flex-row">
         <div className="">
           <p className="text-primary font-semibold">Item :</p>
           <PageHeader
@@ -51,7 +51,7 @@ export default function ItemsDocuments() {
 
           <Button
             variant="outline"
-            className="rounded-full py-4 px-4"
+            className="rounded-full px-4 py-4"
             onClick={() => refetch()}
             disabled={isFetching}
           >

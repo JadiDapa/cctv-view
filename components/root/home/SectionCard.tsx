@@ -7,11 +7,11 @@ export function SectionCard({ section }: { section: SectionType }) {
   return (
     <Link
       href={`/sections/${section.id}`}
-      className="w-64  rounded-2xl block  bg-indigo-100/80 p-4 space-y-4 shadow-sm "
+      className="block w-64 space-y-4 rounded-2xl bg-indigo-100/80 p-4 shadow-sm"
     >
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full">
           <Folder className="h-5 w-5 text-slate-700" />
         </div>
         <span className="text-slate-500">•••</span>
@@ -25,7 +25,7 @@ export function SectionCard({ section }: { section: SectionType }) {
 
       {/* Progress */}
       <div className="space-y-1">
-        <Progress value={49} className="h-2 bg-white" />
+        <Progress value={49} className="h-2" />
         <div className="flex justify-between text-xs text-slate-600">
           <span>24.5 GB</span>
           <span>50 GB</span>
@@ -33,7 +33,7 @@ export function SectionCard({ section }: { section: SectionType }) {
       </div>
 
       {/* Footer */}
-      <button className="w-full flex items-center justify-between text-sm font-medium">
+      <button className="flex w-full items-center justify-between text-sm font-medium">
         View
         <ArrowRight className="h-4 w-4" />
       </button>

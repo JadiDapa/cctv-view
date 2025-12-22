@@ -1,4 +1,3 @@
-import { DocumentType } from "./document";
 import { SectionType } from "./section";
 
 export interface CreateItemType {

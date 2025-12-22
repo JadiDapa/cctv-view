@@ -42,8 +42,6 @@ export default function SignInForm() {
     const { email, password } = values;
     if (!isLoaded) return;
 
-    console.log(values);
-
     setIsLoading(true);
     try {
       const result = await signIn.create({ identifier: email, password });
@@ -130,7 +128,7 @@ export default function SignInForm() {
 
         <Button
           disabled={isLoading}
-          className="flex h-10 w-full items-center gap-3 text-lg  lg:h-12"
+          className="flex h-10 w-full items-center gap-3 text-lg lg:h-12"
         >
           {isLoading ? (
             <>

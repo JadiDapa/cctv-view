@@ -8,7 +8,7 @@ interface AuthHeaderProps {
 export default function AuthHeader({ title, subtitle }: AuthHeaderProps) {
   return (
     <div className="">
-      <div className="text-primary justify-center text-3xl font-semibold tracking-wide flex items-center gap-4">
+      {/* <div className="text-primary justify-center text-3xl font-semibold tracking-wide flex items-center gap-4">
         <figure className="relative size-10">
           <Image
             src={"/logo.png"}
@@ -18,7 +18,7 @@ export default function AuthHeader({ title, subtitle }: AuthHeaderProps) {
           />
         </figure>
         <p>FileGear</p>
-      </div>
+      </div> */}
 
       <h1 className="text-primary mt-6 text-center text-3xl font-medium lg:text-5xl">
         {title}

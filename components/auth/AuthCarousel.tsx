@@ -26,5 +26,17 @@ export default function AuthCarousel() {
     return () => clearInterval(interval);
   }, [images.length]);
 
-  return <div className="relative flex-1 "></div>;
+  return (
+    <figure className="relative flex-1">
+      <Image
+        src={
+          "https://www.rmolsumsel.id/uploads/images/2022/12/image_750x_63a70911ea197.jpg"
+        }
+        alt="Auth Carousel"
+        fill
+        className="object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-black/40" />
+    </figure>
+  );
 }

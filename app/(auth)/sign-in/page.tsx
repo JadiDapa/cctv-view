@@ -5,10 +5,10 @@ import Link from "next/link";
 
 export default function SignInPage() {
   return (
-    <section className="flex min-h-screen overflow-hidden ">
+    <section className="flex min-h-screen overflow-hidden">
       <AuthCarousel />
 
-      <main className="flex flex-col w-[45%] items-center justify-center bg-card p-8 lg:px-40 rounded-e-4xl shadow-2xl">
+      <main className="bg-card flex w-full flex-col items-center justify-center rounded-e-4xl p-8 shadow-2xl lg:w-[45%] lg:px-40">
         <AuthHeader
           title="Sign In Now!"
           subtitle="Sebelum melangkah lebih lanjut, silahkan masuk terlebih dahulu!"

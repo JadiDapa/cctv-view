@@ -74,11 +74,9 @@ export default function DashboardNavbar() {
           />
 
           <div className="flex flex-col leading-tight">
-            <span className="font-medium">
-              {account.account?.fullName || "Daffa Althaf"}
-            </span>
+            <span className="font-medium">{"Administrator"}</span>
             <span className="text-sm text-gray-500">
-              daffaalthaf25@gmail.com
+              {account.account?.email}
             </span>
           </div>
         </div>

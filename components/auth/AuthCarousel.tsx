@@ -27,7 +27,7 @@ export default function AuthCarousel() {
   }, [images.length]);
 
   return (
-    <figure className="relative flex-1">
+    <figure className="relative hidden flex-1 lg:block">
       <Image
         src={
           "https://www.rmolsumsel.id/uploads/images/2022/12/image_750x_63a70911ea197.jpg"

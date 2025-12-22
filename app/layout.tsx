@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "../components/ui/sonner";
 import Providers from "../providers/Providers";
 
-const montserrat = Montserrat({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "Camera View",
+  title: "CCTV TIK POLDA SUMSEL",
   description:
     "FileGear is a document management system that allows you to manage your documents in one place.",
 };
@@ -25,7 +25,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={`${montserrat.className}`}>
+      <body className={`${poppins.className}`}>
         <Toaster richColors position="top-right" theme="light" />
         <Providers>
           <main>{children}</main>

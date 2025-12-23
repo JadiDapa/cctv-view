@@ -1,7 +1,7 @@
 import AuthCarousel from "@/components/auth/AuthCarousel";
 import SignInForm from "@/components/auth/sign-in/SignInForm";
 import AuthHeader from "@/components/auth/AuthHeader";
-import Link from "next/link";
+import SignAsGuest from "@/components/auth/sign-in/SignAsGuest";
 
 export default function SignInPage() {
   return (
@@ -14,12 +14,8 @@ export default function SignInPage() {
           subtitle="Sebelum melangkah lebih lanjut, silahkan masuk terlebih dahulu!"
         />
         <SignInForm />
-        <p className="mt-4 text-center lg:mt-6">
-          Belum memiliki akun?{" "}
-          <Link className="text-primary underline" href="/sign-up">
-            Daftar Sekarang!
-          </Link>
-        </p>
+
+        <SignAsGuest />
       </main>
     </section>
   );

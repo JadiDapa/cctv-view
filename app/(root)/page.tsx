@@ -2,11 +2,15 @@
 
 import { useState } from "react";
 import { CameraCard } from "@/components/root/camera/CameraCard";
-import PageHeader from "@/components/root/PageHeader";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LayoutGrid, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import CreateCameraDialog from "@/components/root/camera/CreateCameraDialog";
+import { getAllCameras } from "@/lib/networks/camera";
+import { useQuery } from "@tanstack/react-query";
+import { getUserByUsername } from "@/lib/networks/user";
+import { useUser } from "@clerk/nextjs";
 
 const GRID_OPTIONS = [1, 2, 3, 4, 5, 6, 7] as const;
 
@@ -15,18 +19,32 @@ export default function DashboardPage() {
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState("");
 
-  const filteredCameras = cameras.filter((camera) =>
+  const { data: cameras } = useQuery({
+    queryFn: getAllCameras,
+    queryKey: ["cameras"],
+  });
+
+  const { user } = useUser();
+
+  const { data: account } = useQuery({
+    queryFn: () => getUserByUsername(user?.username as string),
+    queryKey: ["user"],
+  });
+
+  const isAdmin = account?.role === "ADMIN";
+
+  const filteredCameras = cameras?.filter((camera) =>
     camera.title.toLowerCase().includes(search.toLowerCase()),
   );
 
+  if (!cameras || !filteredCameras) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <main className="min-h-screen w-full space-y-8 overflow-hidden border p-4 md:rounded-2xl lg:p-6">
-      {/* PAGE HEADER */}
       <div className="mt-20 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        {/* <PageHeader title="Dashboard Overview" subtitle="Selamat datang!" /> */}
-        {/* RIGHT CONTROLS */}
         <div className="flex w-80 flex-col gap-3">
-          {/* GRID SELECTOR */}
           <div className="bg-muted/40 flex items-center gap-3 rounded-lg border p-1.5">
             <div className="text-muted-foreground flex items-center gap-2 px-2 text-sm font-medium">
               <LayoutGrid className="h-4 w-4" />
@@ -49,9 +67,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* SEARCH */}
           <div className="flex items-center gap-2">
-            {/* INPUT */}
             <div className="relative w-64">
               <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
@@ -62,7 +78,6 @@ export default function DashboardPage() {
               />
             </div>
 
-            {/* BUTTON */}
             <Button onClick={() => setSearch(query)} className="h-9 px-3">
               <Search className="h-4 w-4" />
             </Button>
@@ -70,7 +85,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* CAMERA GRID */}
       <section className="space-y-4">
         <div
           className={cn(
@@ -87,61 +101,67 @@ export default function DashboardPage() {
           {filteredCameras.map((camera) => (
             <CameraCard key={camera.id} {...camera} />
           ))}
+
+          {isAdmin && <CreateCameraDialog />}
         </div>
       </section>
     </main>
   );
 }
 
-export const cameras = [
-  {
-    id: "1",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-  },
-  {
-    id: "2",
-    title: "KM 000+640 (GT Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10640",
-  },
-  {
-    id: "3",
-    title: "KM 357",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10357",
-  },
-  {
-    id: "4",
-    title: "KM 358",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10358",
-  },
-  {
-    id: "5",
-    title: "KM 359",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10359",
-  },
-  {
-    id: "6",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10362",
-  },
-  {
-    id: "7",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-  },
-  {
-    id: "8",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-  },
-  {
-    id: "9",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-  },
-  {
-    id: "10",
-    title: "KM 000+150 (Akses Kramasan)",
-    iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-  },
-];
+// export const cameras = [
+//   {
+//     id: "1",
+//     title: "AIR BATU ARAH PALEMBANG",
+//     iframe:
+//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=4",
+//   },
+//   {
+//     id: "2",
+//     title: "AIR BATU ARAH BETUNG",
+//     iframe:
+//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=9",
+//   },
+//   {
+//     id: "3",
+//     title: "SEMBAWA ARAH PALEMBANG",
+//     iframe:
+//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=15",
+//   },
+//   {
+//     id: "4",
+//     title: "PINTU MASUK TOL KRAMASAN",
+//     iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/streams/11150.m3u8",
+//   },
+//   {
+//     id: "5",
+//     title: "PINTU MASUK TOL PEMULUTAN",
+//     iframe:
+//       "https://extstream.hk-opt2.com/LiveApp/streams/180147138812973317702348.m3u8",
+//   },
+//   // {
+//   //   id: "6",
+//   //   title: "KM 000+150 (Akses Kramasan)",
+//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10362",
+//   // },
+//   // {
+//   //   id: "7",
+//   //   title: "KM 000+150 (Akses Kramasan)",
+//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   // },
+//   // {
+//   //   id: "8",
+//   //   title: "KM 000+150 (Akses Kramasan)",
+//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   // },
+//   // {
+//   //   id: "9",
+//   //   title: "KM 000+150 (Akses Kramasan)",
+//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   // },
+//   // {
+//   //   id: "10",
+//   //   title: "KM 000+150 (Akses Kramasan)",
+//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   // },
+// ];

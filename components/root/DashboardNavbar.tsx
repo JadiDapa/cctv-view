@@ -2,12 +2,19 @@
 
 import { Home, LogOut } from "lucide-react";
 import Image from "next/image";
-import { useAccount } from "@/providers/AccountProvider";
 import Link from "next/link";
-import { useClerk } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
+import { getUserByUsername } from "@/lib/networks/user";
+import { useQuery } from "@tanstack/react-query";
 
 export default function DashboardNavbar() {
-  const account = useAccount();
+  const { user } = useUser();
+
+  const { data: account } = useQuery({
+    queryFn: () => getUserByUsername(user?.username as string),
+    queryKey: ["user"],
+  });
+
   const { signOut } = useClerk();
 
   return (
@@ -74,10 +81,8 @@ export default function DashboardNavbar() {
           />
 
           <div className="flex flex-col leading-tight">
-            <span className="font-medium">{"Administrator"}</span>
-            <span className="text-sm text-gray-500">
-              {account.account?.email}
-            </span>
+            <span className="font-medium">{account?.name}</span>
+            <span className="text-sm text-gray-500">{account?.role}</span>
           </div>
         </div>
       </div>

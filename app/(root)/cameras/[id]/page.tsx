@@ -2,12 +2,22 @@
 
 import PageHeader from "@/components/root/PageHeader";
 import { useParams } from "next/navigation";
-import { cameras } from "../../page";
 import { MoreHorizontal, Wifi } from "lucide-react";
 import { CameraCard } from "@/components/root/camera/CameraCard";
+import { getAllCameras, getCameraById } from "@/lib/networks/camera";
+import { useQuery } from "@tanstack/react-query";
 
 export default function SelectedCamera() {
   const { id } = useParams();
+
+  const { data: cameras } = useQuery({
+    queryFn: getAllCameras,
+    queryKey: ["cameras"],
+  });
+
+  if (!cameras) {
+    return <div>Loading...</div>;
+  }
 
   const camera = cameras.find((camera) => camera.id === id);
   const otherCameras = cameras.filter((camera) => camera.id !== id);
@@ -21,7 +31,7 @@ export default function SelectedCamera() {
         <div className="relative aspect-video flex-1 overflow-hidden rounded-2xl">
           <div className="relative block aspect-video overflow-hidden rounded-2xl">
             <iframe
-              src={camera?.iframe}
+              src={camera?.url}
               allow="fullscreen"
               allowFullScreen
               className="absolute inset-0 h-full w-full border-0"

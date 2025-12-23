@@ -1,13 +1,11 @@
-export type Camera = {
-  id: string;
-  name: string;
-  location: string;
-  image: string;
-  battery: number;
-  time: string;
-};
-
-export type CameraGroup = {
+export interface CreateCameraType {
   title: string;
-  cameras: Camera[];
-};
+  url: string;
+  status: string;
+}
+
+export interface CameraType extends CreateCameraType {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

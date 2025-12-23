@@ -11,21 +11,23 @@ export async function getUserById(id: string) {
   return data;
 }
 
-export async function getUserByEmail(email: string) {
-  const { data } = await axiosInstance.get<UserType>("/users/emails/" + email);
+export async function getUserByUsername(username: string) {
+  const { data } = await axiosInstance.get<UserType>(
+    "/users/username/" + username,
+  );
   return data;
 }
 
 export async function getTeacherByUserId(userId: string) {
   const { data } = await axiosInstance.get<UserType>(
-    "/users/students/" + userId
+    "/users/students/" + userId,
   );
   return data;
 }
 
 export async function getUsersByTeacherId(teacherId: string) {
   const { data } = await axiosInstance.get<UserType[]>(
-    "/users/teachers/" + teacherId
+    "/users/teachers/" + teacherId,
   );
   return data;
 }

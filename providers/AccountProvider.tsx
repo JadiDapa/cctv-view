@@ -11,7 +11,7 @@ import { useUser } from "@clerk/nextjs";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { UserType } from "@/lib/types/user";
-import { getUserByEmail } from "@/lib/networks/user";
+import { getUserByUsername } from "@/lib/networks/user";
 
 interface AccountContextType {
   account?: UserType | null;
@@ -27,7 +27,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const queryClient = useQueryClient();
 
-  const userEmail = user?.primaryEmailAddress?.emailAddress ?? "";
+  const username = user?.username || "";
   const isLoginPage = pathname === "/sign-in" || pathname === "/sign-up";
 
   useEffect(() => {
@@ -41,20 +41,19 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["account", userEmail], // ✅ unified key
-    queryFn: () => getUserByEmail(userEmail),
-    enabled: !!userEmail,
+    queryKey: ["accounts", username],
+    queryFn: () => getUserByUsername(username),
+    enabled: !!username,
   });
 
-  // Load from localStorage first
   useEffect(() => {
-    if (userEmail) {
+    if (username) {
       const saved = localStorage.getItem("account");
       if (saved) {
-        queryClient.setQueryData(["account", userEmail], JSON.parse(saved));
+        queryClient.setQueryData(["account", username], JSON.parse(saved));
       }
     }
-  }, [userEmail, queryClient]);
+  }, [username, queryClient]);
 
   // Save to localStorage
   useEffect(() => {
@@ -69,11 +68,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       loading: isLoading,
       refetch,
     }),
-    [account, isLoading, refetch]
+    [account, isLoading, refetch],
   );
 
-  if (!isLoaded) return null; // Clerk still loading
-  if (!user && !isLoginPage) return null; // redirect pending
+  if (!isLoaded) return null;
+  if (!user && !isLoginPage) return null;
 
   return (
     <AccountContext.Provider value={value}>{children}</AccountContext.Provider>

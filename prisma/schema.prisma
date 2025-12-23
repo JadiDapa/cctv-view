@@ -9,42 +9,27 @@ datasource db {
 
 enum Role {
   ADMIN
-  USER
-}
-
-enum DocumentType {
-  PROCEDURE
-  REGULATION
-  ANNOUCEMENT
-  REPORTS
-  OTHER
+  GUEST
 }
 
 model User {
   id        String   @id @default(uuid())
   name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
+  role      Role     @default(GUEST)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Section {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  cameras     Camera[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Camera {
+  id        String       @id @default(uuid())
+  title     String
+  url       String
+  status    CameraStatus @default(ACTIVE)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
 
-model Camera {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  sectionId   String
-  section     Section  @relation(fields: [sectionId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+enum CameraStatus {
+  ACTIVE
+  INACTIVE
 }

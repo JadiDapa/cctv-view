@@ -11,7 +11,7 @@ export default function SignUpPage() {
           title="Sign Up Now!"
           subtitle="Sebelum melangkah lebih lanjut, silahkan masuk terlebih dahulu!"
         />
-        <SignUpForm />
+        {/* <SignUpForm /> */}
         <p className="text-center">
           Already have an account?{" "}
           <Link className="text-primary underline" href="/sign-in">

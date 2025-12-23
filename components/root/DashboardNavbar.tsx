@@ -57,8 +57,8 @@ export default function DashboardNavbar() {
           </div>
         </div>
         <div
-          onClick={() => signOut}
-          className="bg-card hover:bg-primary rounded-full border p-2 hover:text-white"
+          onClick={() => signOut()}
+          className="bg-card hover:bg-primary cursor-pointer rounded-full border p-2 hover:text-white"
         >
           <LogOut className="size-5 text-gray-600" />
         </div>

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
-import { Eye, EyeClosed, LoaderCircle, Lock, Mail } from "lucide-react";
+import { Eye, EyeClosed, LoaderCircle, Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup } from "@/components/ui/field";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/input-group";
 
 const registerSchema = z.object({
-  email: z.email().min(1, "Email tidak boleh kosong"),
+  username: z.string().min(1, "Username tidak boleh kosong"),
   password: z.string().min(1, "Password tidak boleh kosong"),
 });
 
@@ -33,18 +33,18 @@ export default function SignInForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const { email, password } = values;
+    const { username, password } = values;
     if (!isLoaded) return;
 
     setIsLoading(true);
     try {
-      const result = await signIn.create({ identifier: email, password });
+      const result = await signIn.create({ identifier: username, password });
 
       if (result.status === "complete" && result.createdSessionId) {
         await setActive({ session: result.createdSessionId });
@@ -52,11 +52,11 @@ export default function SignInForm() {
 
         router.push("/");
       } else {
-        toast.error("Kombinasi Email dan Password Salah!");
+        toast.error("Kombinasi Username dan Password Salah!");
       }
     } catch (error) {
       console.error("Login error:", error);
-      toast.error("Kombinasi Email dan Password Salah!");
+      toast.error("Kombinasi Username dan Password Salah!");
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +71,7 @@ export default function SignInForm() {
         <div className="space-y-4">
           <Controller
             control={form.control}
-            name="email"
+            name="username"
             render={({ field, fieldState }) => (
               <Field className="relative">
                 <InputGroup className="h-12">
@@ -83,7 +83,7 @@ export default function SignInForm() {
                     autoComplete="off"
                   />
                   <InputGroupAddon>
-                    <Mail />
+                    <User />
                   </InputGroupAddon>
                 </InputGroup>
                 {fieldState.invalid && (

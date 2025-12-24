@@ -29,7 +29,7 @@ export default function SelectedCamera() {
       </div>
       <div className="flex h-[80vh] w-full flex-col gap-6 lg:flex-row">
         <div className="relative aspect-video flex-1 overflow-hidden rounded-2xl">
-          <div className="relative block aspect-video overflow-hidden rounded-2xl">
+          <div className="relative block h-full w-full overflow-hidden rounded-2xl">
             <video
               src={camera?.url}
               autoPlay

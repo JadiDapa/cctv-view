@@ -27,7 +27,7 @@ export function CameraCard({ id, title, url, status }: CameraCardProps) {
         autoPlay
         muted
         playsInline
-        className="absolute h-full w-full object-cover"
+        className="absolute h-full w-full bg-black object-contain"
       ></video>
 
       <div

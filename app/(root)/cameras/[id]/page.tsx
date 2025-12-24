@@ -22,7 +22,6 @@ export default function SelectedCamera() {
   const camera = cameras.find((camera) => camera.id === id);
   const otherCameras = cameras.filter((camera) => camera.id !== id);
 
-  console.log(camera);
   return (
     <main className="min-h-screen w-full space-y-8 overflow-hidden border p-4 pt-40 md:rounded-2xl lg:p-6">
       <div className="mt-20 flex flex-col items-center justify-between lg:flex-row">
@@ -37,7 +36,7 @@ export default function SelectedCamera() {
               muted
               playsInline
               controls
-              className="absolute h-full w-full object-cover"
+              className="absolute h-full w-full bg-black object-contain"
             ></video>
 
             {/* Overlay */}

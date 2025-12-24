@@ -22,11 +22,13 @@ export function CameraCard({ id, title, url, status }: CameraCardProps) {
   const router = useRouter();
   return (
     <div className="relative block aspect-video overflow-hidden rounded-2xl">
-      <iframe
-        onClick={() => router.push(`/cameras/${id}`)}
+      <video
         src={url}
-        className="absolute m-0 h-full w-full cursor-pointer border p-0"
-      />
+        autoPlay
+        muted
+        playsInline
+        className="absolute h-full w-full object-cover"
+      ></video>
 
       <div
         onClick={() => router.push(`/cameras/${id}`)}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CameraCard } from "@/components/root/camera/CameraCard";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,11 +18,20 @@ export default function DashboardPage() {
   const [grid, setGrid] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(2);
   const [query, setQuery] = useState("");
   const [search, setSearch] = useState("");
+  const [cameras, setCameras] = useState<any[]>([]);
 
-  const { data: cameras } = useQuery({
-    queryFn: getAllCameras,
-    queryKey: ["cameras"],
-  });
+  useEffect(() => {
+    async function fetchCameras() {
+      try {
+        const data = await getAllCameras();
+        setCameras(data);
+      } catch (error) {
+        console.error("Error fetching cameras:", error);
+      }
+    }
+
+    fetchCameras();
+  }, []);
 
   const { user } = useUser();
 
@@ -36,6 +45,8 @@ export default function DashboardPage() {
   const filteredCameras = cameras?.filter((camera) =>
     camera.title.toLowerCase().includes(search.toLowerCase()),
   );
+
+  console.log(filteredCameras);
 
   if (!cameras || !filteredCameras) {
     return <div>Loading...</div>;
@@ -113,55 +124,51 @@ export default function DashboardPage() {
 //   {
 //     id: "1",
 //     title: "AIR BATU ARAH PALEMBANG",
-//     iframe:
-//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=4",
+//     url: "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=4",
 //   },
 //   {
 //     id: "2",
 //     title: "AIR BATU ARAH BETUNG",
-//     iframe:
-//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=9",
+//     url: "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=9",
 //   },
 //   {
 //     id: "3",
 //     title: "SEMBAWA ARAH PALEMBANG",
-//     iframe:
-//       "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=15",
+//     url: "https://cctv.banyuasinkab.go.id/zm/cgi-bin/nph-zms?user=tamu&pass=tamu123&monitor=15",
 //   },
 //   {
 //     id: "4",
 //     title: "PINTU MASUK TOL KRAMASAN",
-//     iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/streams/11150.m3u8",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/streams/11150.m3u8",
 //   },
 //   {
 //     id: "5",
 //     title: "PINTU MASUK TOL PEMULUTAN",
-//     iframe:
-//       "https://extstream.hk-opt2.com/LiveApp/streams/180147138812973317702348.m3u8",
+//     url: "https://extstream.hk-opt2.com/LiveApp/streams/180147138812973317702348.m3u8",
 //   },
-//   // {
-//   //   id: "6",
-//   //   title: "KM 000+150 (Akses Kramasan)",
-//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10362",
-//   // },
-//   // {
-//   //   id: "7",
-//   //   title: "KM 000+150 (Akses Kramasan)",
-//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-//   // },
-//   // {
-//   //   id: "8",
-//   //   title: "KM 000+150 (Akses Kramasan)",
-//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-//   // },
-//   // {
-//   //   id: "9",
-//   //   title: "KM 000+150 (Akses Kramasan)",
-//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-//   // },
-//   // {
-//   //   id: "10",
-//   //   title: "KM 000+150 (Akses Kramasan)",
-//   //   iframe: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
-//   // },
+//   {
+//     id: "6",
+//     title: "KM 000+150 (Akses Kramasan)",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=10362",
+//   },
+//   {
+//     id: "7",
+//     title: "KM 000+150 (Akses Kramasan)",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   },
+//   {
+//     id: "8",
+//     title: "KM 000+150 (Akses Kramasan)",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   },
+//   {
+//     id: "9",
+//     title: "KM 000+150 (Akses Kramasan)",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   },
+//   {
+//     id: "10",
+//     title: "KM 000+150 (Akses Kramasan)",
+//     url: "https://stream-cctv-wst.my.id:5443/LiveApp/play.html?name=11150",
+//   },
 // ];

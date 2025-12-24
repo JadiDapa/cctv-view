@@ -22,26 +22,29 @@ export default function SelectedCamera() {
   const camera = cameras.find((camera) => camera.id === id);
   const otherCameras = cameras.filter((camera) => camera.id !== id);
 
+  console.log(camera);
   return (
-    <main className="min-h-screen w-full space-y-8 overflow-hidden border p-4 md:rounded-2xl lg:p-6">
-      <div className="flex flex-col items-center justify-between lg:flex-row">
+    <main className="min-h-screen w-full space-y-8 overflow-hidden border p-4 pt-40 md:rounded-2xl lg:p-6">
+      <div className="mt-20 flex flex-col items-center justify-between lg:flex-row">
         <PageHeader title={camera?.title} subtitle="Section : KM 0" />
       </div>
       <div className="flex h-[80vh] w-full flex-col gap-6 lg:flex-row">
         <div className="relative aspect-video flex-1 overflow-hidden rounded-2xl">
           <div className="relative block aspect-video overflow-hidden rounded-2xl">
-            <iframe
+            <video
               src={camera?.url}
-              allow="fullscreen"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
-            />
+              autoPlay
+              muted
+              playsInline
+              controls
+              className="absolute h-full w-full object-cover"
+            ></video>
 
             {/* Overlay */}
 
             {/* Top Icons */}
 
-            <div className="absolute top-2 right-2 flex items-center gap-2 text-sm text-white">
+            <div className="absolute top-2 right-2 z-100 flex items-center gap-2 text-sm text-white">
               <div className="flex items-center gap-2 rounded-md border border-green-700 bg-green-200/20 px-2 text-green-700">
                 <p className="">Active</p>
                 <Wifi size={16} />
@@ -51,7 +54,7 @@ export default function SelectedCamera() {
             </div>
 
             {/* Bottom Info */}
-            <div className="absolute bottom-2 left-2 text-sm text-white">
+            <div className="absolute bottom-2 left-2 z-100 text-sm text-white">
               <p className="font-medium">{camera?.title}</p>
               <p className="text-xs opacity-80">{new Date().toDateString()}</p>
             </div>
